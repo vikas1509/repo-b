@@ -1,4 +1,4 @@
-name: Sync to Repo1
+name: Sync to repo-a
 on:
   push:
     branches:
@@ -10,7 +10,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, '[sync-skip]')"
     
     steps:
-      - name: Checkout Repo-2 (source)
+      - name: Checkout repo-b (source)
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -33,7 +33,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, '[sync-skip]')"
     
     steps:
-      - name: Checkout Repo1 (source)
+      - name: Checkout repo-a (source)
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -44,7 +44,7 @@ jobs:
           git config --global user.na
 Aman Kumar Jha
 15:58
-name: Sync to Repo1
+name: Sync to repo-a
 on:
   push:
     branches:
@@ -56,7 +56,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, '[sync-skip]')"
     
     steps:
-      - name: Checkout Repo-2 (source)
+      - name: Checkout repo-a (source)
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
