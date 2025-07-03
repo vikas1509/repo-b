@@ -1,0 +1,68 @@
+name: Sync to Repo1
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[sync-skip]')"
+    
+    steps:
+      - name: Checkout Repo-2 (source)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.TARGET_REPO_PAT }}
+      
+      - name: Set up Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "git
+name: Sync to Repo-2
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    # Prevent infinite loops by checking commit message
+    if: "!contains(github.event.head_commit.message, '[sync-skip]')"
+    
+    steps:
+      - name: Checkout Repo1 (source)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.TARGET_REPO_PAT }}
+      
+      - name: Set up Git configuration
+        run: |
+          git config --global user.na
+Aman Kumar Jha
+15:58
+name: Sync to Repo1
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[sync-skip]')"
+    
+    steps:
+      - name: Checkout Repo-2 (source)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.TARGET_REPO_PAT }}
+      
+      - name: Set up Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "git
