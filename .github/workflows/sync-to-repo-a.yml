@@ -24,7 +24,7 @@
 #       - name: Clone target repository (repo-a)
 #         run: |
 #           # Clone the TARGET repository (repo-a), not the source (repo-b)
-#           git clone https://x-access-token:${{ secrets.TARGET_REPO_TOKEN }}@github.com/undefined-dev74/repo-a.git
+#           git clone https://x-access-token:${{ secrets.TARGET_REPO_TOKEN }}@github.com/vikas1509/repo-a.git
 #           echo "Successfully cloned target repository"
       
 #       - name: Sync files to target repo
