@@ -89,7 +89,7 @@ jobs:
       - name: Clone target repository (repo-a)
         run: |
           echo "Cloning target repository..."
-          git clone https://x-access-token:${{ secrets.TARGET_REPO_TOKEN }}@github.com/undefined-dev74/repo-a.git
+          git clone https://x-access-token:${{ secrets.TARGET_REPO_TOKEN }}@github.com/vikas1509/repo-a.git
           echo "✅ Successfully cloned repo-a"
       
       - name: Sync files to target repository
