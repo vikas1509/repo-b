@@ -1,0 +1,66 @@
+name: Sync to repo-b
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    # Prevent infinite loops by checking commit message
+    if: "!contains(github.event.head_commit.message, '[sync-skip]')"
+    
+    steps:
+      - name: Checkout repo-a (source)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.TARGET_REPO_TOKEN }}
+      
+      - name: Set up Git configuration
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      
+      - name: Clone target repository (repo-b)
+        run: |
+          echo "Cloning target repository..."
+          git clone https://x-access-token:${{ secrets.TARGET_REPO_TOKEN }}@github.com/vikas1509/repo-b.git
+          echo "✅ Successfully cloned repo-b"
+      
+      - name: Sync files to target repository
+        run: |
+          echo "Syncing files from repo-a to repo-b..."
+          # Copy all files except .git directory and target repo directory
+          rsync -av --exclude='.git' --exclude='repo-b' ./ repo-b/
+          echo "✅ Files synced successfully"
+      
+      - name: Commit and push changes
+        run: |
+          cd repo-b
+          
+          # Check current status
+          echo "Checking repository status..."
+          git status
+          
+          # Add all changes
+          git add .
+          
+          # Check if there are changes to commit
+          if git diff --staged --quiet; then
+            echo "ℹ️ No changes to commit"
+            exit 0
+          fi
+          
+          # Commit with sync-skip marker to prevent infinite loop
+          echo "Committing changes..."
+          git commit -m "Sync from repo-a [sync-skip]
+
+          🔄 Auto-sync from Repo1
+          Original commit: ${{ github.sha }}
+          Original message: ${{ github.event.head_commit.message }}"
+          
+          # Push to main branch
+          echo "Pushing changes to repo-b..."
+          git push origin main
+          echo "✅ Successfully synced repo-b → repo-b"
